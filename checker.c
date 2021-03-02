@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <assert.h>
 
+int checkTemperatureLevel_i(float temperature);
+int checkSocLevel_i(float soc);
+int  checkChargeRate_i(float chargeRate);
+int batteryIsOk(float temperature, float soc, float chargeRate);
+  
 int batteryIsOk(float temperature, float soc, float chargeRate) {
   int validity_i = 0;
   
