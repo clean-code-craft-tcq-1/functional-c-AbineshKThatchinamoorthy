@@ -2,16 +2,28 @@
 #include <assert.h>
 
 int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
-int batteryIsOk(float temperature, float soc, float chargeRate);
-  
-int batteryIsOk(float temperature, float soc, float chargeRate) {
+int testBatteryCond_i(float temperature, float soc, float chargeRate);
+
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    testBatteryCond_i
+ */
+/*!    \brief       check whether the Battery parameter is within the range
+ * 
+ *     \param       tempVal_f       [IN] - current Battery param value
+ *     \param       socVal_f        [IN] - acceptable minimum value
+ *     \param       chargeRateVal_f [IN] - acceptable maximum value
+ *     \returns     validity_i      [OUT]- Overall Battery Status
+ *
+*//*------------------------------------------------------------------------*/
+int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVal_f) {
   int validity_i = 0;
   
-  validity_i |= (checkBatteryCond_i(temperature,0,45,0));
-  validity_i |= (checkBatteryCond_i(soc,20,80,1)) << 1;
-  validity_i |= (checkBatteryCond_i(chargeRate,0,0.8,2)) << 2;
-  
+  validity_i |= (checkBatteryCond_i(tempVal_f,0,45,0));/* Store the temperature status in last bit */
+  validity_i |= (checkBatteryCond_i(socVal_f,20,80,1)) << 1;/* Store the temperature status in last but 1 bit*/
+  validity_i |= (checkBatteryCond_i(chargeRateVal_f,0,0.8,2)) << 2;/* Store the temperature status in last but 2 bits*/
+  /* All the 3 states are valid */
   validity_i = (7 == validity_i) ? 1 : 0;
+  /*Return the validity status */
   return validity_i;
 }
 
@@ -45,6 +57,6 @@ int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,
 }
     
 int main() {
-  assert(batteryIsOk(25, 70, 0.7));
-  assert(!batteryIsOk(50, 85, 0));
+  assert(testBatteryCond_i(25, 70, 0.7));
+  assert(!testBatteryCond_i(50, 85, 0));
 }
