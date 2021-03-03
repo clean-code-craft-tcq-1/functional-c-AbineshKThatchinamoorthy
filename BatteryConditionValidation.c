@@ -9,8 +9,8 @@
 #include "BatteryConditionValidation.h"
 
 /* Funtion declarations */
-static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
 static int testBatteryCond_i(float temperature, float soc, float chargeRate);
+static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    testBatteryCond_i
