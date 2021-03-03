@@ -32,14 +32,14 @@ int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,
   /*Battery par printed for ref*/
   char batPar[3][10] = {"temp","soc","chargerate"};
   
-  if((batteryParam_f < minRange) || (batteryParam_f < maxRange))
+  if((batteryParam_f < minRange_f) || (batteryParam_f > maxRange_f))
   {
-   printf("Battery parameter %s is out of range!\n",batPar[batParIndex]);
+   printf("Battery parameter %s is out of range!\n",batPar[batParamIndex_i]);
    return 0;
   }
   else
   {
-   printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
+   printf("Battery parameter %s is Normal !\n",batPar[batParamIndex_i]);
    return 1;
   }
 }
