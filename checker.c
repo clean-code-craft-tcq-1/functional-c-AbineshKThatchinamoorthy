@@ -60,4 +60,7 @@ static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxR
 int main() {
   assert(testBatteryCond_i(25, 70, 0.7));
   assert(!testBatteryCond_i(50, 85, 0));
+  assert(!testBatteryCond_i(50, 75, 0.9));
+  assert(!testBatteryCond_i(25, 85, 0.9));
+  assert(!testBatteryCond_i(50, 85, 0.9));
 }
