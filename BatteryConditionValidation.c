@@ -2,11 +2,11 @@
 /***    \file        BatteryConditionValidation.c
 ***     \author      Abinesh Kanji Kovil Thatchinamoorthy (RBEI/ECK1) 
 ***
-***     \brief       Battery Condition Monitoring
+***     \brief       Source file for Battery Condition Monitoring
 /*****************************************************************************/
 
-#include <stdio.h>
-#include <assert.h>
+/* Project Inlcudes */
+#include "BatteryConditionValidation.h"
 
 /* Funtion declarations */
 static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
@@ -26,11 +26,11 @@ static int testBatteryCond_i(float temperature, float soc, float chargeRate);
 static int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVal_f) {
   int validity_i = 0;
   
-  validity_i |= (checkBatteryCond_i(tempVal_f,0,45,0));/* Store the temperature status in last bit */
-  validity_i |= (checkBatteryCond_i(socVal_f,20,80,1)) << 1;/* Store the temperature status in last but 1 bit*/
-  validity_i |= (checkBatteryCond_i(chargeRateVal_f,0,0.8,2)) << 2;/* Store the temperature status in last but 2 bits*/
+  validity_i |= (checkBatteryCond_i(tempVal_f      ,TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0));     /* Store the temperature status in last bit */
+  validity_i |= (checkBatteryCond_i(socVal_f       ,SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1)) << 1;/* Store the temperature status in last but 1 bit*/
+  validity_i |= (checkBatteryCond_i(chargeRateVal_f,CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2)) << 2;/* Store the temperature status in last but 2 bits*/
   /* All the 3 states are valid */
-  validity_i = (7 == validity_i) ? 1 : 0;
+  validity_i = (ALL_VALID_STATE == validity_i) ? 1 : 0;
   /*Return the validity status */
   return validity_i;
 }
@@ -49,8 +49,6 @@ static int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVa
 *//*------------------------------------------------------------------------*/
 static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i)
 {
-  /*Battery par printed for ref*/
-  char batPar[3][10] = {"temp","soc","chargerate"};
   
   if((batteryParam_f < minRange_f) || (batteryParam_f > maxRange_f))
   {
@@ -66,7 +64,7 @@ static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxR
     
 int main() {
   assert(testBatteryCond_i(25, 70, 0.7));
-  assert(!testBatteryCond_i(50, 85, 0));
+  assert(!testBatteryCond_i(50, 10, 0));
   assert(!testBatteryCond_i(50, 75, 0.9));
   assert(!testBatteryCond_i(25, 85, 0.9));
   assert(!testBatteryCond_i(50, 85, 0.9));
