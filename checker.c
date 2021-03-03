@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <assert.h>
 
-int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
-int testBatteryCond_i(float temperature, float soc, float chargeRate);
+/* Funtion declaration */
+static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
+static int testBatteryCond_i(float temperature, float soc, float chargeRate);
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    testBatteryCond_i
@@ -15,7 +16,7 @@ int testBatteryCond_i(float temperature, float soc, float chargeRate);
  *     \returns     validity_i      [OUT]- Overall Battery Status
  *
 *//*------------------------------------------------------------------------*/
-int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVal_f) {
+static int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVal_f) {
   int validity_i = 0;
   
   validity_i |= (checkBatteryCond_i(tempVal_f,0,45,0));/* Store the temperature status in last bit */
@@ -39,7 +40,7 @@ int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVal_f) {
  *     \returns     Battery parameter validity status
  *
 *//*------------------------------------------------------------------------*/
-int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i)
+static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i)
 {
   /*Battery par printed for ref*/
   char batPar[3][10] = {"temp","soc","chargerate"};
