@@ -1,7 +1,14 @@
+/*****************************************************************************/
+/***    \file        BatteryConditionValidation.c
+***     \author      Abinesh Kanji Kovil Thatchinamoorthy (RBEI/ECK1) 
+***
+***     \brief       Battery Condition Monitoring
+/*****************************************************************************/
+
 #include <stdio.h>
 #include <assert.h>
 
-/* Funtion declaration */
+/* Funtion declarations */
 static int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
 static int testBatteryCond_i(float temperature, float soc, float chargeRate);
 
