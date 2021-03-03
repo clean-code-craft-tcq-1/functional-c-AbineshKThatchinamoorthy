@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-int checkTemperatureLevel_i(float temperature);
-int checkSocLevel_i(float soc);
-int  checkChargeRate_i(float chargeRate);
+int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
 int batteryIsOk(float temperature, float soc, float chargeRate);
   
 int batteryIsOk(float temperature, float soc, float chargeRate) {
@@ -17,28 +15,33 @@ int batteryIsOk(float temperature, float soc, float chargeRate) {
   return validity_i;
 }
 
-int checkTemperatureLevel_i(float temperature) {
-    if(temperature < 0 || temperature > 45) {
-    printf("Temperature out of range!\n");
-    return 0;
-  } 
-  return 1;
-}
-
-int checkSocLevel_i(float soc) {
-  if(soc < 20 || soc > 80) {
-      printf("State of Charge out of range!\n");
-      return 0;
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    checkBatteryCond_i
+ */
+/*!    \brief       check whether the Battery parameter is within the range
+ * 
+ *     \param       batteryParam_f [IN] - current Battery param value
+ *     \param       minRange_f     [IN] - acceptable minimum value
+ *     \param       maxRange_f     [IN] - acceptable maximum value
+ *     \param       batParamIndex_i[IN] - acceptable maximum value
+ *     \returns     Battery parameter validity status
+ *
+*//*------------------------------------------------------------------------*/
+int checkBatteryCond_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i)
+{
+  /*Battery par printed for ref*/
+  char batPar[3][10] = {"temp","soc","chargerate"};
+  
+  if((batteryParam_f < minRange) || (batteryParam_f < maxRange))
+  {
+   printf("Battery parameter %s is out of range!\n",batPar[batParIndex]);
+   return 0;
   }
-  return 1;
-}
-
-int  checkChargeRate_i(float chargeRate) {
-  if(chargeRate > 0.8) {
-      printf("Charge Rate out of range!\n");
-      return 0;
-    }
-  return 1;
+  else
+  {
+   printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
+   return 1;
+  }
 }
     
 int main() {
