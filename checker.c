@@ -7,9 +7,9 @@ int batteryIsOk(float temperature, float soc, float chargeRate);
 int batteryIsOk(float temperature, float soc, float chargeRate) {
   int validity_i = 0;
   
-  validity_i |= (checkTemperatureLevel_i(temperature));
-  validity_i |= (checkSocLevel_i(soc)) << 1;
-  validity_i |= (checkChargeRate_i(chargeRate)) << 2;
+  validity_i |= (checkBatteryCond_i(temperature,0,45,0));
+  validity_i |= (checkBatteryCond_i(soc,20,80,1)) << 1;
+  validity_i |= (checkBatteryCond_i(chargeRate,0,0.8,2)) << 2;
   
   validity_i = (7 == validity_i) ? 1 : 0;
   return validity_i;
