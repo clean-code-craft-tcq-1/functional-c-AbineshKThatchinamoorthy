@@ -8,6 +8,9 @@
 /* Project Inlcudes */
 #include "BatteryConditionValidation.h"
 
+VSUM_LOCAL battCondn_t battCondn_s =  {0, 0, 0,};
+VSUM_LOCAL prevBattCondn_t prevBattCondn_s =  {0, 0, 0,};
+
 /* Funtion declarations */
 static int testBatteryCond_i(float temperature, float soc, float chargeRate);
 static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
@@ -23,12 +26,12 @@ static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float max
  *     \returns     validity_i      [OUT]- Overall Battery Status
  *
 *//*------------------------------------------------------------------------*/
-static int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVal_f) {
+static int testBatteryCond_i() {
   int validity_i = 0;
   
-  validity_i |= (checkBatteryParam_i(tempVal_f      ,TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0));     /* Store the temperature status in last bit */
-  validity_i |= (checkBatteryParam_i(socVal_f       ,SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1)) << 1;/* Store the temperature status in last but 1 bit*/
-  validity_i |= (checkBatteryParam_i(chargeRateVal_f,CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2)) << 2;/* Store the temperature status in last but 2 bits*/
+  validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0));     /* Store the temperature status in last bit */
+  validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1)) << 1;/* Store the temperature status in last but 1 bit*/
+  validity_i |= (checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2)) << 2;/* Store the temperature status in last but 2 bits*/
   /* All the 3 states are valid */
   validity_i = (ALL_VALID_STATE == validity_i) ? 1 : 0;
   /*Return the validity status */
@@ -49,23 +52,57 @@ static int testBatteryCond_i(float tempVal_f, float socVal_f, float chargeRateVa
 *//*------------------------------------------------------------------------*/
 static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i)
 {
+  int valChange_i;
   
-  if((batteryParam_f < minRange_f) || (batteryParam_f > maxRange_f))
+  if(batteryParam_f < minRange_f)
   {
-   printf("Battery parameter %s is out of range!\n",batPar[batParamIndex_i]);
+   printf("Battery parameter %s is below minimum range!\n", batPar[batParamIndex_i]);
+   return 0;
+  }
+  else if(batteryParam_f > maxRange_f)
+  {
+   printf("Battery parameter %s is above maximum range!\n", batPar[batParamIndex_i]);
    return 0;
   }
   else
   {
-   printf("Battery parameter %s is Normal !\n",batPar[batParamIndex_i]);
+   valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - battCondn_s.prevBattCondnParam_i[batParamIndex_i];
+   if(4 <= valChange_i)
+   {
+    printf("Battery parameter %s is Normal and approaching !\n", batPar[batParamIndex_i]);  
+   }
    return 1;
   }
 }
     
 int main() {
-  assert(testBatteryCond_i(25, 70, 0.7));
-  assert(!testBatteryCond_i(50, 10, 0));
-  assert(!testBatteryCond_i(50, 75, 0.9));
-  assert(!testBatteryCond_i(25, 85, 0.9));
-  assert(!testBatteryCond_i(50, 85, 0.9));
+  battCondn_s.battCondnParam_i[0] = 25;
+  battCondn_s.battCondnParam_i[1] = 70;
+  battCondn_s.battCondnParam_i[2] = 0.7;
+  assert(testBatteryCond_i());
+  battCondn_s = prevBattCondn_s;
+  
+  battCondn_s.battCondnParam_i[0] = 50;
+  battCondn_s.battCondnParam_i[1] = 10;
+  battCondn_s.battCondnParam_i[2] = 0;
+  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  battCondn_s = prevBattCondn_s;
+  
+  battCondn_s.battCondnParam_i[0] = 50;
+  battCondn_s.battCondnParam_i[1] = 75;
+  battCondn_s.battCondnParam_i[2] = 0.9;
+  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  battCondn_s = prevBattCondn_s;
+  
+  battCondn_s.battCondnParam_i[0] = 25;
+  battCondn_s.battCondnParam_i[1] = 85;
+  battCondn_s.battCondnParam_i[2] = 0.9;
+  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  battCondn_s = prevBattCondn_s;
+  
+  battCondn_s.battCondnParam_i[0] = 50;
+  battCondn_s.battCondnParam_i[1] = 85;
+  battCondn_s.battCondnParam_i[2] = 0.9;
+  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  battCondn_s = prevBattCondn_s;
 }
