@@ -51,7 +51,7 @@ static int testBatteryCond_i() {
  *     \returns     Battery parameter validity status
  *
 *//*------------------------------------------------------------------------*/
-static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i)
+static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i)
 {
   int valChange_i;
   
@@ -67,7 +67,7 @@ static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float max
   }
   else
   {
-    checkBatteryParam_i(informTrendChange_i);
+    informTrendChange_i(informTrendChange_i);
     return 1;
   }
 }
@@ -84,7 +84,7 @@ static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float max
 *//*------------------------------------------------------------------------*/
 static int informTrendChange_i(int batParamIndex_i)
 {
-   valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.prevBattCondnParam_i[batParamIndex_i];
+   valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.battCondnParam_i[batParamIndex_i];
   
    if(4 <= valChange_i)
    {
