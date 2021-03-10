@@ -14,7 +14,7 @@ static battCondn_t prevBattCondn_s;
 /* Funtion declarations */
 static int testBatteryCond_i();
 static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i);
-static int informTrendChange_i(int batParamIndex_i);
+static void informTrendChange_v(int batParamIndex_i);
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    testBatteryCond_i
@@ -66,7 +66,7 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
   }
   else
   {
-    informTrendChange_i(informTrendChange_i);
+    informTrendChange_v(informTrendChange_i);
     return 1;
   }
 }
@@ -81,7 +81,7 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
  *     \returns     Battery parameter validity status
  *
 *//*------------------------------------------------------------------------*/
-static int informTrendChange_i(int batParamIndex_i)
+static void informTrendChange_v(int batParamIndex_i)
 {
    int valChange_i = 0;
   
