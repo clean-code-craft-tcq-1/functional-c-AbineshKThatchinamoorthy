@@ -8,12 +8,12 @@
 /* Project Inlcudes */
 #include "BatteryConditionValidation.h"
 
-VSUM_LOCAL battCondn_t battCondn_s =  {0, 0, 0,};
-VSUM_LOCAL prevBattCondn_t prevBattCondn_s =  {0, 0, 0,};
+static battCondn_t battCondn_s =  {0, 0, 0,};
+static prevBattCondn_t prevBattCondn_s =  {0, 0, 0,};
 
 /* Funtion declarations */
-static int testBatteryCond_i(float temperature, float soc, float chargeRate);
-static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float maxRange_f,int batParamIndex_i);
+static int testBatteryCond_i();
+static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i);
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    testBatteryCond_i
@@ -66,23 +66,39 @@ static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float max
   }
   else
   {
+    checkBatteryParam_i(batParamIndex_i);
+    return 1;
+  }
+}
+
+
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    checkBatteryParam_i
+ */
+/*!    \brief       check whether the Battery parameter is within the range
+ * 
+ *     \param       batParamIndex_i[IN] - acceptable maximum value
+ *     \returns     Battery parameter validity status
+ *
+*//*------------------------------------------------------------------------*/
+static int checkBatteryParam_i(int batParamIndex_i)
+{
    valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - battCondn_s.prevBattCondnParam_i[batParamIndex_i];
+  
    if(4 <= valChange_i)
    {
-      printf(" Battery parameter %s is Normal.\n Current trend : Decrease in value(Approaching lower threshold) \n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+      printf(" Battery parameter %s is Normal.\n Current trend : Value is increasin(Approaching lower threshold) \n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
    }
-   else if(4 => valChange_i)
+   else if(4 >= valChange_i)
    {
-     printf(" Battery parameter %s is Normal.\n Current trend : Decrease in value(Approaching lower threshold) \n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+     printf(" Battery parameter %s is Normal.\n Current trend : Value is deccreasing(Approaching lower threshold) \n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
    }
    else
    {
-      printf(" Battery parameter %s is Normal\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   }
-   return 1;
-  }
+      printf(" Battery parameter %s is Normal.\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+   }  
 }
-    
+
 int main() {
   battCondn_s.battCondnParam_i[0] = 25;
   battCondn_s.battCondnParam_i[1] = 70;
@@ -93,24 +109,24 @@ int main() {
   battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 10;
   battCondn_s.battCondnParam_i[2] = 0;
-  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 75;
   battCondn_s.battCondnParam_i[2] = 0.9;
-  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 25;
   battCondn_s.battCondnParam_i[1] = 85;
   battCondn_s.battCondnParam_i[2] = 0.9;
-  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 85;
   battCondn_s.battCondnParam_i[2] = 0.9;
-  assert(testBatteryCond_i(battCondn_s.tmpVal_i, battCondn_s.socVal_i, battCondn_s.chargeRateVal_i));
+  assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
 }
