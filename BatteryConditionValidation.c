@@ -108,7 +108,7 @@ int main() {
   assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
-  battCondn_s.battCondnParam_i[0] = 50;
+  /*battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 10;
   battCondn_s.battCondnParam_i[2] = 0;
   assert(testBatteryCond_i());
@@ -130,5 +130,5 @@ int main() {
   battCondn_s.battCondnParam_i[1] = 85;
   battCondn_s.battCondnParam_i[2] = 0.9;
   assert(testBatteryCond_i());
-  battCondn_s = prevBattCondn_s;
+  battCondn_s = prevBattCondn_s;*/
 }
