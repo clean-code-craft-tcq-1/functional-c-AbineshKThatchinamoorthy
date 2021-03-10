@@ -69,7 +69,15 @@ static int checkBatteryParam_i(float batteryParam_f ,float minRange_f, float max
    valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - battCondn_s.prevBattCondnParam_i[batParamIndex_i];
    if(4 <= valChange_i)
    {
-    printf("Battery parameter %s is Normal and approaching !\n", batPar[batParamIndex_i]);  
+      printf(" Battery parameter %s is Normal.\n Current trend : Decrease in value(Approaching lower threshold) \n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+   }
+   else if(4 => valChange_i)
+   {
+     printf(" Battery parameter %s is Normal.\n Current trend : Decrease in value(Approaching lower threshold) \n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+   }
+   else
+   {
+      printf(" Battery parameter %s is Normal\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
    }
    return 1;
   }
