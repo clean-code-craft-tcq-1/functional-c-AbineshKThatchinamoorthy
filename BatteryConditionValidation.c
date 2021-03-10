@@ -53,7 +53,6 @@ static int testBatteryCond_i() {
 *//*------------------------------------------------------------------------*/
 static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i)
 {
-  int valChange_i;
   
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
@@ -84,6 +83,8 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
 *//*------------------------------------------------------------------------*/
 static int informTrendChange_i(int batParamIndex_i)
 {
+   int valChange_i;
+  
    valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.battCondnParam_i[batParamIndex_i];
   
    if(4 <= valChange_i)
