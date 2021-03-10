@@ -55,14 +55,14 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
 {
   int valChange_i;
   
-  if(batteryParam_f < minRange_f)
+  if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
-   printf("Battery parameter %s is below minimum range!\n", batPar[batParamIndex_i]);
+   printf("Battery parameter %s is below minimum range!\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
    return 0;
   }
-  else if(batteryParam_f > maxRange_f)
+  else if(battCondn_s.battCondnParam_i[batParamIndex_i] > maxRange_f)
   {
-   printf("Battery parameter %s is above maximum range!\n", batPar[batParamIndex_i]);
+   printf("Battery parameter %s is above maximum range!\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
    return 0;
   }
   else
