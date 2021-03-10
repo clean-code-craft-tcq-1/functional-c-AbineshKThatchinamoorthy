@@ -66,7 +66,7 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
   }
   else
   {
-    informTrendChange_i(informTrendChange_i);
+    //informTrendChange_i(informTrendChange_i);
     return 1;
   }
 }
