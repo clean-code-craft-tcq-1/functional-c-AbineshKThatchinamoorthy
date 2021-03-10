@@ -35,10 +35,6 @@ typedef enum
 }vsum_BcmCmdIngSts_t;
 
 typedef struct {
-    int prevBattCondnParam_i[3];
-}prevBattCondn_t;
-
-typedef struct {
     int battCondnParam_i[3];
 }battCondn_t;
 
