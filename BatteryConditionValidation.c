@@ -9,7 +9,7 @@
 #include "BatteryConditionValidation.h"
 
 static battCondn_t battCondn_s;
-static prevBattCondn_t prevBattCondn_s;
+static battCondn_t prevBattCondn_s;
 
 /* Funtion declarations */
 static int testBatteryCond_i();
