@@ -66,7 +66,7 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
   }
   else
   {
-    //informTrendChange_i(informTrendChange_i);
+    informTrendChange_i(informTrendChange_i);
     return 1;
   }
 }
@@ -83,9 +83,9 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
 *//*------------------------------------------------------------------------*/
 static int informTrendChange_i(int batParamIndex_i)
 {
-   int valChange_i;
+   int valChange_i = 0;
   
-   valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.battCondnParam_i[batParamIndex_i];
+   //valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.battCondnParam_i[batParamIndex_i];
   
    if(4 <= valChange_i)
    {
@@ -108,7 +108,7 @@ int main() {
   assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
-  /*battCondn_s.battCondnParam_i[0] = 50;
+  battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 10;
   battCondn_s.battCondnParam_i[2] = 0;
   assert(testBatteryCond_i());
@@ -130,5 +130,5 @@ int main() {
   battCondn_s.battCondnParam_i[1] = 85;
   battCondn_s.battCondnParam_i[2] = 0.9;
   assert(testBatteryCond_i());
-  battCondn_s = prevBattCondn_s;*/
+  battCondn_s = prevBattCondn_s;
 }
