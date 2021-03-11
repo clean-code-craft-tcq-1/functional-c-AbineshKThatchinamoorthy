@@ -14,7 +14,7 @@ static int langVal_i;
 
 /* Funtion declarations */
 static int testBatteryCond_i();
-static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i);
+static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i);
 static void informTrendChange_v(int batParamIndex_i);
 
 /*---------------------------------------------------------------------------*/
@@ -33,9 +33,9 @@ static int testBatteryCond_i() {
   
   langIndex_i = (GERMAN_LANGUAGE == langVal_i)? 3: 0;
   
-  validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,(0+langIndex_i)));     /* Store the temperature status in last bit */
-  validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,(1+langIndex_i))) << 1;/* Store the temperature status in last but 1 bit*/
-  validity_i |= (checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,(2+langIndex_i))) << 2;/* Store the temperature status in last but 2 bits*/
+  validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0 ,langIndex_i));     /* Store the temperature status in last bit */
+  validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1 ,langIndex_i)) << 1;/* Store the temperature status in last but 1 bit*/
+  validity_i |= (checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2 ,langIndex_i)) << 2;/* Store the temperature status in last but 2 bits*/
   /* All the 3 states are valid */
   validity_i = (ALL_VALID_STATE == validity_i) ? 1 : 0;
   /*Return the validity status */
@@ -54,22 +54,22 @@ static int testBatteryCond_i() {
  *     \returns     Battery parameter validity status
  *
 *//*------------------------------------------------------------------------*/
-static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i)
+static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i)
 {
   
-  if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
+  if(battCondn_s.battCondnParam_i[batParamIndex_i - langIndex_i] < minRange_f)
   {
-   printf("Battery parameter %s is below minimum range!\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+   printf("Battery parameter %s is below minimum range!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i+langIndex_i]);
    return 0;
   }
-  else if(battCondn_s.battCondnParam_i[batParamIndex_i] > maxRange_f)
+  else if(battCondn_s.battCondnParam_i[batParamIndex_i - langIndex_i] > maxRange_f)
   {
-   printf("Battery parameter %s is above maximum range!\n Current Val : %d !\n", batPar[batParamIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
+   printf("Battery parameter %s is above maximum range!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i+langIndex_i]);
    return 0;
   }
   else
   {
-    informTrendChange_v(batParamIndex_i);
+    informTrendChange_v(batParamIndex_i-langIndex_i);
     return 1;
   }
 }
@@ -88,7 +88,7 @@ static void informTrendChange_v(int batParamIndex_i)
 {
    int valChange_i = 0;
   
-   //valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.battCondnParam_i[batParamIndex_i];
+   valChange_i = battCondn_s.battCondnParam_i[batParamIndex_i] - prevBattCondn_s.battCondnParam_i[batParamIndex_i];
   
    if(4 <= valChange_i)
    {
