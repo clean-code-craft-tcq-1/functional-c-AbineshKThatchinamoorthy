@@ -14,6 +14,7 @@
 
 char batPar[3][10] = {"temp","soc","chargerate"};
 
+
 #define TEMP_VALID_MIN_VAL                 0
 #define TEMP_VALID_MAX_VAL                45
 #define SOC_VALID_MIN_VAL                 20
@@ -23,16 +24,16 @@ char batPar[3][10] = {"temp","soc","chargerate"};
 
 #define ALL_VALID_STATE                    7
 
-/* Enum for the possible values of Command Ignition status from BCM */
+char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"};
+char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};
+
+/* Enum for the possible values of Languages */
 typedef enum
 {
-    VSUM_STATE_BCM_ING_STS_INIT   = 0X00,
-    VSUM_STATE_BCM_ING_STS_IGN_LK = 0X01,
-    VSUM_STATE_BCM_ING_STS_ACC    = 0X03,
-    VSUM_STATE_BCM_ING_STS_RUN    = 0X04,
-    VSUM_STATE_BCM_ING_STS_START  = 0X05,
-    VSUM_STATE_BCM_ING_STS_SNA    = 0X07,
-}vsum_BcmCmdIngSts_t;
+    ENGLISH_LANGUAGE   = 0X00,
+    GERMAN_LANGUAGE          ,
+    TOTAL_LANGUAGES_SUPPORTED,
+}vsum_LangVal_t;
 
 typedef struct {
     int battCondnParam_i[3];
