@@ -10,6 +10,7 @@
 
 static battCondn_t battCondn_s;
 static battCondn_t prevBattCondn_s;
+static int langVal_i;
 
 /* Funtion declarations */
 static int testBatteryCond_i();
@@ -28,11 +29,13 @@ static void informTrendChange_v(int batParamIndex_i);
  *
 *//*------------------------------------------------------------------------*/
 static int testBatteryCond_i() {
-  int validity_i = 0;
+  int validity_i = 0, langIndex_i = 0;
   
-  validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0));     /* Store the temperature status in last bit */
-  validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1)) << 1;/* Store the temperature status in last but 1 bit*/
-  validity_i |= (checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2)) << 2;/* Store the temperature status in last but 2 bits*/
+  langIndex_i = if(GERMAN_LANGUAGE == langVal_i)? 3: 0;
+  
+  validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,(0+langIndex_i)));     /* Store the temperature status in last bit */
+  validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,(1+langIndex_i))) << 1;/* Store the temperature status in last but 1 bit*/
+  validity_i |= (checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,(2+langIndex_i))) << 2;/* Store the temperature status in last but 2 bits*/
   /* All the 3 states are valid */
   validity_i = (ALL_VALID_STATE == validity_i) ? 1 : 0;
   /*Return the validity status */
@@ -105,6 +108,7 @@ int main() {
   battCondn_s.battCondnParam_i[0] = 25;
   battCondn_s.battCondnParam_i[1] = 70;
   battCondn_s.battCondnParam_i[2] = 0.7;
+  langVal_i = GERMAN_LANGUAGE;
   assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
@@ -112,6 +116,7 @@ int main() {
   battCondn_s.battCondnParam_i[1] = 10;
   battCondn_s.battCondnParam_i[2] = 0;
   assert(!testBatteryCond_i());
+  langVal_i = ENGLISH_LANGUAGE;
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 50;
