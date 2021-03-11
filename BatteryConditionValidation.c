@@ -15,7 +15,7 @@ static int langVal_i;
 /* Funtion declarations */
 static int testBatteryCond_i();
 static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i);
-static void informTrendChange_v(int batParamIndex_i);
+static void informTrendChange_v(int batParamIndex_i, langIndex_i);
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    testBatteryCond_i
