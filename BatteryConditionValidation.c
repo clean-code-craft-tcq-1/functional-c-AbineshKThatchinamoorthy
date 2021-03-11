@@ -50,7 +50,7 @@ static int testBatteryCond_i() {
  *     \param       batteryParam_f [IN] - current Battery param value
  *     \param       minRange_f     [IN] - acceptable minimum value
  *     \param       maxRange_f     [IN] - acceptable maximum value
- *     \param       batParamIndex_i[IN] - acceptable maximum value
+ *     \param       batParamIndex_i[IN] - Index of the Battery parameter
  *     \returns     Battery parameter validity status
  *
 *//*------------------------------------------------------------------------*/
@@ -76,12 +76,12 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
 
 
 /*---------------------------------------------------------------------------*/
-/*     FUNCTION:    checkBatteryParam_i
+/*     FUNCTION:    informTrendChange_v
  */
-/*!    \brief       check whether the Battery parameter is within the range
+/*!    \brief       Print the change in trend when the value is Normal
  * 
- *     \param       batParamIndex_i[IN] - acceptable maximum value
- *     \returns     Battery parameter validity status
+ *     \param       batParamIndex_i[IN] - Index of the Battery parameter
+ *     \returns     void
  *
 *//*------------------------------------------------------------------------*/
 static void informTrendChange_v(int batParamIndex_i)
@@ -122,18 +122,21 @@ int main() {
   battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 75;
   battCondn_s.battCondnParam_i[2] = 0.9;
+  langVal_i = ENGLISH_LANGUAGE;
   assert(!testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 25;
   battCondn_s.battCondnParam_i[1] = 85;
   battCondn_s.battCondnParam_i[2] = 0.9;
+  langVal_i = GERMAN_LANGUAGE;
   assert(!testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 50;
   battCondn_s.battCondnParam_i[1] = 85;
   battCondn_s.battCondnParam_i[2] = 0.9;
+  langVal_i = ENGLISH_LANGUAGE;
   assert(!testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
 }
