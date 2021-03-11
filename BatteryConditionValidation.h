@@ -12,7 +12,8 @@
 =======                       CONSTANTS  &  TYPES                       =======
 =============================================================================*/
 
-char batPar[3][10] = {"temp","soc","chargerate"};
+char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"};
+char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};
 
 
 #define TEMP_VALID_MIN_VAL                 0
@@ -23,9 +24,6 @@ char batPar[3][10] = {"temp","soc","chargerate"};
 #define CHARGE_RATE_VALID_MAX_VAL         0.8
 
 #define ALL_VALID_STATE                    7
-
-char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"};
-char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};
 
 /* Enum for the possible values of Languages */
 typedef enum
