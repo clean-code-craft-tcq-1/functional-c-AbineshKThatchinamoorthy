@@ -105,7 +105,7 @@ int main() {
   battCondn_s.battCondnParam_i[0] = 25;
   battCondn_s.battCondnParam_i[1] = 70;
   battCondn_s.battCondnParam_i[2] = 0.7;
-  assert(!testBatteryCond_i());
+  assert(testBatteryCond_i());
   battCondn_s = prevBattCondn_s;
   
   battCondn_s.battCondnParam_i[0] = 50;
