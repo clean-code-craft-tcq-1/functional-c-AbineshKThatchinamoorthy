@@ -31,7 +31,7 @@ static void informTrendChange_v(int batParamIndex_i);
 static int testBatteryCond_i() {
   int validity_i = 0, langIndex_i = 0;
   
-  langIndex_i = if(GERMAN_LANGUAGE == langVal_i)? 3: 0;
+  langIndex_i = (GERMAN_LANGUAGE == langVal_i)? 3: 0;
   
   validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,(0+langIndex_i)));     /* Store the temperature status in last bit */
   validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,(1+langIndex_i))) << 1;/* Store the temperature status in last but 1 bit*/
