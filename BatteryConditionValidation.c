@@ -15,7 +15,7 @@ static int langVal_i;
 
 /* Funtion declarations */
 static int testBatteryCond_i();
-static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i);
+static void checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i);
 static void informTrendChange_v(int batParamIndex_i, int langIndex_i);
 static void informForCounterMeasure_v();
 
@@ -48,7 +48,7 @@ static int testBatteryCond_i() {
   }
   
   bms_s.anomalyCnt_i = 0;
-  bms_s.invalidBattParam_c[] = "";
+  bms_s.invalidBattParam_c = "";
     
   /*Return the validity status */
   return validity_i;
@@ -66,7 +66,7 @@ static int testBatteryCond_i() {
  *     \returns     Battery parameter validity status
  *
 *//*------------------------------------------------------------------------*/
-static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i)
+static void checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i)
 {
   
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
@@ -120,12 +120,12 @@ static void informTrendChange_v(int batParamIndex_i, int langIndex_i)
 
 static void informForCounterMeasure_v()
 {
-  string prntStr[100] = " ";
+  char prntStr[100] = " ";
   printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
   /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
   for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
   {
-    strcat(prntStr, " "
+    strcat(prntStr, " ");
     strcat(prntStr, bms_s.invalidBattParam_c[cnt_i]);
   }
   
