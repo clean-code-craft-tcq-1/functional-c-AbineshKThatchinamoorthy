@@ -13,7 +13,7 @@
 =======                       CONSTANTS  &  TYPES                       =======
 =============================================================================*/
 
-char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"};
+char batPar[6][12] = {"TEMP","SOC","CHARGERATE","TEMP","LADEZUSTAND","LADESTROM"};
 char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};
 
 
