@@ -53,7 +53,6 @@ static int testBatteryCond_i() {
       informForCounterMeasure_v();
   }
   
-  bms_s.anomalyCnt_i = 0;
   memset(bms_s.battCondnValidity_i,0,3*sizeof(int));
   
   printf("=====================================================================================================\n");
@@ -79,12 +78,10 @@ static void checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamI
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   bms_s.anomalyCnt_i++;
   }
   else if(battCondn_s.battCondnParam_i[batParamIndex_i] > maxRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   bms_s.anomalyCnt_i++;
   }
   else
   {
@@ -138,8 +135,7 @@ static void informForCounterMeasure_v()
   printf("*****************************************************************************************************\n");
   printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
   /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
-  printf("anomalyCnt_i %d \n", bms_s.anomalyCnt_i);
-  for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
+  for(int cnt_i = 0; cnt_i < 3; cnt_i++)
   {
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
