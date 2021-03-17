@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 /*=============================================================================
 =======                       CONSTANTS  &  TYPES                       =======
@@ -36,5 +37,11 @@ typedef enum
 typedef struct {
     int battCondnParam_i[3];
 }battCondn_t;
+
+typedef struct {
+    int battCondnValidity_i[3];
+    int anomalyCnt_i;   
+    char invalidBattParam_c[3][12];
+}BMS_t;
 
 
