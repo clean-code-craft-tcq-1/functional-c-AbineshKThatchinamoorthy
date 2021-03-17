@@ -135,22 +135,22 @@ static void informTrendChange_v(int batParamIndex_i, int langIndex_i)
 static void informForCounterMeasure_v()
 {
   char prntStr[100] = " ";
+  printf("*****************************************************************************************************\n");
   printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
   /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
   printf("anomalyCnt_i %d \n", bms_s.anomalyCnt_i);
   for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
   {
-    printf("cnt_i %d \n", cnt_i);
-    printf("bms_s.battCondnValidity_i[cnt_i] %d \n", bms_s.battCondnValidity_i[cnt_i]);
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
-      strcat(prntStr, "  ");
+      strcat(prntStr, " \n ");
       strcat(prntStr, batPar[cnt_i]);
-      printf("prntStr %s \n", prntStr);
     }
   }
   
   printf("Anamoly's for the below Battery parameters have been detected\n %s ", prntStr);
+  
+  printf("*****************************************************************************************************\n");
 }
 
 int main() {
