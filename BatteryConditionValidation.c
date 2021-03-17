@@ -136,9 +136,10 @@ static void informForCounterMeasure_v()
   printf("anomalyCnt_i %d \n", bms_s.anomalyCnt_i);
   for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
   {
+    printf("cnt_i %d \n", cnt_i);
+    printf("bms_s.battCondnValidity_i[cnt_i] %d \n", bms_s.battCondnValidity_i[cnt_i]);
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
-      printf("cnt_i %d \n", cnt_i);
       strcat(prntStr, "  ");
       strcat(prntStr, batPar[cnt_i]);
       printf("prntStr %s \n", prntStr);
