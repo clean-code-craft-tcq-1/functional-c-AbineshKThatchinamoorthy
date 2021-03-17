@@ -126,7 +126,7 @@ static void informForCounterMeasure_v()
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
       strcat(prntStr, "  ");
-      strcat(prntStr, bms_s.batPar[cnt_i]);
+      strcat(prntStr, batPar[cnt_i]);
     }
   }
   
