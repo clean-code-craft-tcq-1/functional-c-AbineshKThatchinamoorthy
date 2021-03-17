@@ -48,7 +48,7 @@ static int testBatteryCond_i() {
   }
   
   bms_s.anomalyCnt_i = 0;
-  bms_s.battCondnValidity_i[3] = { };
+  memset(battCondnValidity_i,0,3)
     
   /*Return the validity status */
   return validity_i;
