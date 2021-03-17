@@ -136,14 +136,14 @@ static void informForCounterMeasure_v()
 {
   char prntStr[100] = " ";
   printf("*****************************************************************************************************\n");
-  printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
+  printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n");
   /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
   for(int cnt_i = 0; cnt_i < 3; cnt_i++)
   {
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
       strcat(prntStr, batPar[cnt_i]);
-      strcat(prntStr, " \n ");
+      strcat(prntStr, " \n");
     }
   }
   
