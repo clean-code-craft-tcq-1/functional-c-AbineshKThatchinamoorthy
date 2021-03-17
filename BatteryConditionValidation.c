@@ -49,7 +49,9 @@ static int testBatteryCond_i() {
   
   bms_s.anomalyCnt_i = 0;
   memset(bms_s.battCondnValidity_i,0,3);
-    
+  
+  printf("=====================================================================================================\n");
+  
   /*Return the validity status */
   return validity_i;
 }
@@ -68,7 +70,7 @@ static int testBatteryCond_i() {
 *//*------------------------------------------------------------------------*/
 static void checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i)
 {
-  
+  printf("=====================================================================================================\n");
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
