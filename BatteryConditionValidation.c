@@ -17,6 +17,7 @@ static int langVal_i;
 static int testBatteryCond_i();
 static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i);
 static void informTrendChange_v(int batParamIndex_i, int langIndex_i);
+static void informForCounterMeasure_v();
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    testBatteryCond_i
@@ -43,7 +44,7 @@ static int testBatteryCond_i() {
   {
       validity_i = 0;
       /* Inform the external controller for counter measure */ 
-      informForCounterMeasure();
+      informForCounterMeasure_v();
   }
   
   bms_s.anomalyCnt_i = 0;
@@ -117,7 +118,7 @@ static void informTrendChange_v(int batParamIndex_i, int langIndex_i)
    }  
 }
 
-informForCounterMeasure
+static void informForCounterMeasure_v()
 {
   string prntStr[100] = " ";
   printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
