@@ -116,6 +116,15 @@ static void informTrendChange_v(int batParamIndex_i, int langIndex_i)
    }  
 }
 
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    informForCounterMeasure_v
+ */
+/*!    \brief       Combine all the anamolies and send it to controllwe
+ * 
+ *     \param       void
+ *     \returns     void
+ *
+*//*------------------------------------------------------------------------*/
 static void informForCounterMeasure_v()
 {
   char prntStr[100] = " ";
