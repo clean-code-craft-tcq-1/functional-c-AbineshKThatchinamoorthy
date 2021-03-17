@@ -48,7 +48,7 @@ static int testBatteryCond_i() {
   }
   
   bms_s.anomalyCnt_i = 0;
-  bms_s.invalidBattParam_c = "";
+  bms_s.battCondnValidity_i = {0};
     
   /*Return the validity status */
   return validity_i;
@@ -72,13 +72,11 @@ static void checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamI
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   bms_s.invalidBattParam_c[batParamIndex_i+langIndex_i] = batPar[batParamIndex_i+langIndex_i];
    bms_s.anomalyCnt_i++;
   }
   else if(battCondn_s.battCondnParam_i[batParamIndex_i] > maxRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   bms_s.invalidBattParam_c[batParamIndex_i+langIndex_i] = batPar[batParamIndex_i+langIndex_i];
    bms_s.anomalyCnt_i++;
   }
   else
@@ -125,11 +123,14 @@ static void informForCounterMeasure_v()
   /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
   for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
   {
-    strcat(prntStr, " ");
-    strcat(prntStr, bms_s.invalidBattParam_c[cnt_i]);
+    if(0 == bms_s.battCondnValidity_i[cnt_i])
+    {
+      strcat(prntStr, "  ");
+      strcat(prntStr, bms_s.invalidBattParam_c[cnt_i]);
+    }
   }
   
-  printf("Anamoly's for the below Battery parameters have been detected\n %s ", prntStr)
+  printf("Anamoly's for the below Battery parameters have been detected\n %s ", prntStr);
 }
 
 int main() {
