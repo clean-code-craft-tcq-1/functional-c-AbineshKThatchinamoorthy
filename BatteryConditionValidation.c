@@ -133,15 +133,15 @@ static void informForCounterMeasure_v()
   char prntStr[100] = " ";
   printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
   /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
-  printf("anomalyCnt_i %d \n, bms_s.anomalyCnt_i);
+  printf("anomalyCnt_i %d \n", bms_s.anomalyCnt_i);
   for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
   {
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
-      printf("cnt_i %d \n, cnt_i);
+      printf("cnt_i %d \n", cnt_i);
       strcat(prntStr, "  ");
       strcat(prntStr, batPar[cnt_i]);
-      printf("prntStr %s \n, prntStr);
+      printf("prntStr %s \n", prntStr);
     }
   }
   
