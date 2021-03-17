@@ -33,6 +33,8 @@ static void informForCounterMeasure_v();
 static int testBatteryCond_i() {
   int validity_i = 1, langIndex_i = 0;
   
+  printf("=====================================================================================================\n");
+  
   langIndex_i = (GERMAN_LANGUAGE == langVal_i)? 3: 0;
   
   checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0 ,langIndex_i);     /* Store the temperature status in last bit */
@@ -70,7 +72,6 @@ static int testBatteryCond_i() {
 *//*------------------------------------------------------------------------*/
 static void checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIndex_i, int langIndex_i)
 {
-  printf("=====================================================================================================\n");
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
