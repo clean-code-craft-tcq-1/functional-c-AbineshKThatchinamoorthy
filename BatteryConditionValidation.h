@@ -41,7 +41,6 @@ typedef struct {
 typedef struct {
     int battCondnValidity_i[3];
     int anomalyCnt_i;   
-    char invalidBattParam_c[3][12];
 }BMS_t;
 
 
