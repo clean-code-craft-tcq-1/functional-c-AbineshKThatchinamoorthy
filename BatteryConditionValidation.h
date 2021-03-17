@@ -39,8 +39,7 @@ typedef struct {
 }battCondn_t;
 
 typedef struct {
-    int battCondnValidity_i[3];
-    int anomalyCnt_i;   
+    int battCondnValidity_i[3];   
 }BMS_t;
 
 
