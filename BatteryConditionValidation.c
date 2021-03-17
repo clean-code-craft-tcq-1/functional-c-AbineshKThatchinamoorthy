@@ -54,7 +54,7 @@ static int testBatteryCond_i() {
   }
   
   bms_s.anomalyCnt_i = 0;
-  memset(bms_s.battCondnValidity_i,0,3);
+  memset(bms_s.battCondnValidity_i,0,3*sizeof(int));
   
   printf("=====================================================================================================\n");
   
