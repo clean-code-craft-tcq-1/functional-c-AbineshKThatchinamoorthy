@@ -10,6 +10,7 @@
 
 static battCondn_t battCondn_s;
 static battCondn_t prevBattCondn_s;
+static BMS_t bms_s;
 static int langVal_i;
 
 /* Funtion declarations */
@@ -29,15 +30,25 @@ static void informTrendChange_v(int batParamIndex_i, int langIndex_i);
  *
 *//*------------------------------------------------------------------------*/
 static int testBatteryCond_i() {
-  int validity_i = 0, langIndex_i = 0;
+  int validity_i = 1, langIndex_i = 0;
   
   langIndex_i = (GERMAN_LANGUAGE == langVal_i)? 3: 0;
   
-  validity_i |= (checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0 ,langIndex_i));     /* Store the temperature status in last bit */
-  validity_i |= (checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1 ,langIndex_i)) << 1;/* Store the temperature status in last but 1 bit*/
-  validity_i |= (checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2 ,langIndex_i)) << 2;/* Store the temperature status in last but 2 bits*/
-  /* All the 3 states are valid */
-  validity_i = (ALL_VALID_STATE == validity_i) ? 1 : 0;
+  checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0 ,langIndex_i);     /* Store the temperature status in last bit */
+  checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1 ,langIndex_i);/* Store the temperature status in last but 1 bit*/
+  checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2 ,langIndex_i);/* Store the temperature status in last but 2 bits*/
+  
+  /* One/Many of the 3 states is not valid */
+  if(0 < bms_s.anomalyCnt_i)
+  {
+      validity_i = 0;
+      /* Inform the external controller for counter measure */ 
+      informForCounterMeasure();
+  }
+  
+  bms_s.anomalyCnt_i = 0;
+  bms_s.invalidBattParam[] = "";
+    
   /*Return the validity status */
   return validity_i;
 }
@@ -60,17 +71,19 @@ static int checkBatteryParam_i(float minRange_f, float maxRange_f,int batParamIn
   if(battCondn_s.battCondnParam_i[batParamIndex_i] < minRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   return 0;
+   bms_s.invalidBattParam[batParamIndex_i+langIndex_i] = batPar[batParamIndex_i+langIndex_i];
+   bms_s.anomalyCnt_i++;
   }
   else if(battCondn_s.battCondnParam_i[batParamIndex_i] > maxRange_f)
   {
    printf("Battery parameter %s %s!\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
-   return 0;
+   bms_s.invalidBattParam[batParamIndex_i+langIndex_i] = batPar[batParamIndex_i+langIndex_i];
+   bms_s.anomalyCnt_i++;
   }
   else
   {
     informTrendChange_v(batParamIndex_i, langIndex_i);
-    return 1;
+    bms_s.battCondnValidity_i[batParamIndex_i] = 1;
   }
 }
 
@@ -102,6 +115,20 @@ static void informTrendChange_v(int batParamIndex_i, int langIndex_i)
    {
       printf(" Battery parameter %s %s .\n Current Val : %d !\n", batPar[batParamIndex_i+langIndex_i], batLevel[batParamIndex_i+langIndex_i], battCondn_s.battCondnParam_i[batParamIndex_i]);
    }  
+}
+
+informForCounterMeasure
+{
+  string prntStr[100] = " ";
+  printf("ANAMOLY's DETECTED - Time for COUNTER MEASURE \n ");
+  /* No actual controller which takes care of counter measure during anamolies - So currently, print the anamolies in the console */
+  for(int cnt_i = 0; cnt_i < bms_s.anomalyCnt_i; cnt_i++)
+  {
+    strcat(prntStr, " "
+    strcat(prntStr, bms_s.invalidBattParam[cnt_i]);
+  }
+  
+  printf("Anamoly's for the below Battery parameters have been detected\n %s ", prntStr)
 }
 
 int main() {
