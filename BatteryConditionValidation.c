@@ -143,8 +143,8 @@ static void informForCounterMeasure_v()
   {
     if(0 == bms_s.battCondnValidity_i[cnt_i])
     {
-      strcat(prntStr, " \n ");
       strcat(prntStr, batPar[cnt_i]);
+      strcat(prntStr, " \n ");
     }
   }
   
