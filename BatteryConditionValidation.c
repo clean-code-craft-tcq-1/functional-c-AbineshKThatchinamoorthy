@@ -37,14 +37,14 @@ static int testBatteryCond_i() {
   
   langIndex_i = (GERMAN_LANGUAGE == langVal_i)? 3: 0;
   printf("bms_s.battCondnValidity_i[0] %d \n", bms_s.battCondnValidity_i[0]);
-  printf("bms_s.battCondnValidity_i[0] %d \n", bms_s.battCondnValidity_i[1]);
-  printf("bms_s.battCondnValidity_i[0] %d \n", bms_s.battCondnValidity_i[2]);
+  printf("bms_s.battCondnValidity_i[1] %d \n", bms_s.battCondnValidity_i[1]);
+  printf("bms_s.battCondnValidity_i[2] %d \n", bms_s.battCondnValidity_i[2]);
   checkBatteryParam_i(TEMP_VALID_MIN_VAL        ,TEMP_VALID_MAX_VAL       ,0 ,langIndex_i);     /* Store the temperature status in last bit */
   printf("bms_s.battCondnValidity_i[0] %d \n", bms_s.battCondnValidity_i[0]);
   checkBatteryParam_i(SOC_VALID_MIN_VAL         ,SOC_VALID_MAX_VAL        ,1 ,langIndex_i);/* Store the temperature status in last but 1 bit*/
-  printf("bms_s.battCondnValidity_i[0] %d \n", bms_s.battCondnValidity_i[1]);
+  printf("bms_s.battCondnValidity_i[1] %d \n", bms_s.battCondnValidity_i[1]);
   checkBatteryParam_i(CHARGE_RATE_VALID_MIN_VAL ,CHARGE_RATE_VALID_MAX_VAL,2 ,langIndex_i);/* Store the temperature status in last but 2 bits*/
-  printf("bms_s.battCondnValidity_i[0] %d \n", bms_s.battCondnValidity_i[2]);
+  printf("bms_s.battCondnValidity_i[2] %d \n", bms_s.battCondnValidity_i[2]);
   /* One/Many of the 3 states is not valid */
   if(0 < bms_s.anomalyCnt_i)
   {
